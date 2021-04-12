@@ -38,3 +38,6 @@ testem.log
 .DS_Store
 Thumbs.db
 scratch
+
+# scanner - code analysis
+.scannerwork/css-bundle/*
