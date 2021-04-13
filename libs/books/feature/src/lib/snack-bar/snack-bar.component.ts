@@ -3,7 +3,6 @@ import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar'
 
 import { Store } from '@ngrx/store';
 import { removeFromReadingList } from '@tmo/books/data-access';
-
 @Component({
   selector: 'tmo-snack-bar',
   templateUrl: './snack-bar.component.html',
@@ -17,12 +16,8 @@ export class SnackbarComponent {
     @Inject(MAT_SNACK_BAR_DATA) public data: any
   ) { }
 
-  dismiss() {
-    if(JSON.parse(localStorage.getItem("book"))){
-      this.store.dispatch(removeFromReadingList({ 
-        item: JSON.parse(localStorage.getItem("book"))
-      }));
-    };
+  dismiss(item:any) {
+    this.store.dispatch(removeFromReadingList({ item }));
     this.snackBarRef.dismiss();
   }
 }

@@ -6,13 +6,11 @@ import {
   getAllBooks,
   ReadingListBook,
   searchBooks,
-  getReadingList
 } from '@tmo/books/data-access';
 import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Book } from '@tmo/shared/models';
 import { SnackbarComponent } from '../snack-bar/snack-bar.component';
-
 @Component({
   selector: 'tmo-book-search',
   templateUrl: './book-search.component.html',
@@ -48,7 +46,7 @@ export class BookSearchComponent implements OnInit {
   }
 
   addBookToReadingList(book: Book) {
-    this.addBookSnackBar();
+    this.addBookSnackBar(book);
     this.store.dispatch(addToReadingList({ book }));
   }
 
@@ -65,23 +63,16 @@ export class BookSearchComponent implements OnInit {
     }
   }
 
-  addBookSnackBar() {
+  addBookSnackBar(book: Book) {
+    const {id: bookId, ...rest} = book;
+    const item = {bookId, ...rest};
     const message = 'Reading List';
     const durationInSeconds = 2;
     
     this.snackBar.openFromComponent(SnackbarComponent, {
-      data: message,
+      data: {message, item},
       duration: durationInSeconds * 1000
     });
-
-    this.store.select(getReadingList)
-    .subscribe(res => {
-      let resBook = res[res.length - 1] ? res[res.length - 1] : undefined;
-      if (resBook) {
-        localStorage.setItem('book',JSON.stringify(resBook));
-      }
-    });
-
   }
 
 }
