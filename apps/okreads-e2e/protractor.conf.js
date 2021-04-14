@@ -20,6 +20,7 @@ exports.config = {
   capabilities: {
     browserName: 'chrome',
     chromeOptions: {
+      binary: 'C:\\Program Files\\Google\\Chrome Dev\\Application\\chrome.exe',
       args: ['--allow-insecure-localhost']
     }
   },
