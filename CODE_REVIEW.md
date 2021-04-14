@@ -31,6 +31,6 @@ Fix : color: `$gray60;` <br />
 
 ---
 
-> Note : As .vscode is at master, adding .scanner also <br />
+> Note : For code quality, can we use the sonar !! <br />
 
 ---
