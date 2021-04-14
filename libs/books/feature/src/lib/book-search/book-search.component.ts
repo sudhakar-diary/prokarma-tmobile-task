@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import {
   addToReadingList,
@@ -15,9 +17,12 @@ import { Book } from '@tmo/shared/models';
   templateUrl: './book-search.component.html',
   styleUrls: ['./book-search.component.scss']
 })
-export class BookSearchComponent implements OnInit {
+export class BookSearchComponent implements OnInit, AfterViewInit, OnDestroy  {
   books: ReadingListBook[];
+  searchSubscribe: Subscription;
 
+  @ViewChild('termInput') termInput: any;
+  
   searchForm = this.fb.group({
     term: ''
   });
@@ -35,6 +40,16 @@ export class BookSearchComponent implements OnInit {
     this.store.select(getAllBooks).subscribe(books => {
       this.books = books;
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.dynamicSearchBook();
+  }
+
+  ngOnDestroy(): void {
+    if(this.searchSubscribe) {
+      this.searchSubscribe.unsubscribe();
+    }
   }
 
   formatDate(date: void | string) {
@@ -59,4 +74,11 @@ export class BookSearchComponent implements OnInit {
       this.store.dispatch(clearSearch());
     }
   }
+
+  dynamicSearchBook() {
+    this.searchSubscribe = this.searchForm.get('term').valueChanges
+    .pipe(debounceTime(500), distinctUntilChanged())
+    .subscribe(() => this.searchBooks())
+  }
+
 }
