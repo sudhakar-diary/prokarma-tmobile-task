@@ -1,6 +1,0 @@
-projectKey=SonarValidationProject
-serverUrl=http://localhost:8081
-serverVersion=7.9.0.26994
-dashboardUrl=http://localhost:8081/dashboard?id=SonarValidationProject
-ceTaskId=AXihCLXiAKbaBbhpGQA4
-ceTaskUrl=http://localhost:8081/api/ce/task?id=AXihCLXiAKbaBbhpGQA4
