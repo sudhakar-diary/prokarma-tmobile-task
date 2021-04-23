@@ -31,7 +31,7 @@ export class ReadingListService {
 
   async finishBook(b: Book): Promise<void> {
     this.storage.update(list => {
-      const demo = list.filter(item => item.bookId === b.id)
+      list.filter(item => item.bookId === b.id)
       .map(item => ({ ...item, 
         finished: true, 
         finishedDate: new Date().toISOString() 
