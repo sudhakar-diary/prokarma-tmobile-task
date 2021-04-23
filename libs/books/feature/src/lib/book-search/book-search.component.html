@@ -29,6 +29,9 @@
           <div>
             <strong>Published:</strong> {{ formatDate(b.publishedDate) }}
           </div>
+          <div [hidden]="b.finished">
+            <strong>Finished:</strong> {{ b.finishedDate }}
+          </div>
           <p [innerHTML]="b.description"></p>
           <div>
             <button

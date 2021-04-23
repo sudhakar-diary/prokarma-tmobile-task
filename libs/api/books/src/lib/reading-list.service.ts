@@ -31,16 +31,12 @@ export class ReadingListService {
 
   async finishBook(b: Book): Promise<void> {
     this.storage.update(list => {
-      const { id, ...rest } = b;
-      const now = new Date().toISOString();
-      list.push({
-        bookId: id,
-        finished: true,
-        finishedDate: now,
-        ...rest
-      });
+      const demo = list.filter(item => item.bookId === b.id)
+      .map(item => ({ ...item, 
+        finished: true, 
+        finishedDate: new Date().toISOString() 
+      }))
       return list;
     });
   }
-  
 }
