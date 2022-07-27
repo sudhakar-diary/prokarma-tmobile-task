@@ -28,4 +28,15 @@ export class ReadingListService {
       return list.filter(x => x.bookId !== id);
     });
   }
+
+  async finishBook(b: Book): Promise<void> {
+    this.storage.update(list => {
+      list.filter(item => item.bookId === b.id)
+      .map(item => ({ ...item, 
+        finished: true, 
+        finishedDate: new Date().toISOString() 
+      }))
+      return list;
+    });
+  }
 }
